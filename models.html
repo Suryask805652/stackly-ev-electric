@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>Stackly EV | Electric Models</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    body {
+      background: #0a0f14;
+      color: white;
+      overflow-x: hidden;
+      width: 100%;
+      position: relative;
+    }
+
+    /* ========== ENHANCED EV ANIME BACKGROUND ========== */
+    .anime-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background: linear-gradient(135deg, #0a0f14 0%, #1a2634 50%, #0f1a24 100%);
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    /* Electric grid lines */
+    .anime-bg .grid {
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      background: 
+        repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(0, 255, 174, 0.03) 40px, rgba(0, 255, 174, 0.06) 42px, transparent 45px),
+        repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(0, 255, 174, 0.03) 40px, rgba(0, 255, 174, 0.06) 42px, transparent 45px);
+      transform: rotate(30deg);
+      animation: gridMove 25s linear infinite;
+    }
+
+    /* Floating energy particles */
+    .anime-bg .particles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    .anime-bg .particles span {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: #00ffae;
+      border-radius: 50%;
+      box-shadow: 0 0 20px #00ffae, 0 0 40px #00aaff;
+      animation: floatParticle 12s linear infinite;
+      opacity: 0.4;
+    }
+
+    /* Electric arcs */
+    .anime-bg .arcs {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    .anime-bg .arcs svg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0.15;
+    }
+
+    /* Colorful glowing orbs */
+    .anime-bg .orbs {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    .anime-bg .orbs div {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      filter: blur(50px);
+      animation: orbFloat 18s ease-in-out infinite;
+    }
+
+    .orbs div:nth-child(1) {
+      top: 10%;
+      left: 5%;
+      background: radial-gradient(circle, #ff3366 0%, transparent 70%);
+      opacity: 0.3;
+    }
+    .orbs div:nth-child(2) {
+      top: 60%;
+      right: 10%;
+      background: radial-gradient(circle, #33ccff 0%, transparent 70%);
+      opacity: 0.3;
+      animation-delay: -5s;
+    }
+    .orbs div:nth-child(3) {
+      bottom: 20%;
+      left: 20%;
+      background: radial-gradient(circle, #ffcc00 0%, transparent 70%);
+      opacity: 0.25;
+      animation-delay: -10s;
+    }
+    .orbs div:nth-child(4) {
+      top: 30%;
+      right: 30%;
+      background: radial-gradient(circle, #9966ff 0%, transparent 70%);
+      opacity: 0.3;
+      animation-delay: -7s;
+    }
+
+    /* Particle positions */
+    .particles span:nth-child(1) { left: 5%; animation-duration: 8s; }
+    .particles span:nth-child(2) { left: 15%; animation-duration: 12s; }
+    .particles span:nth-child(3) { left: 25%; animation-duration: 10s; }
+    .particles span:nth-child(4) { left: 35%; animation-duration: 14s; }
+    .particles span:nth-child(5) { left: 45%; animation-duration: 9s; }
+    .particles span:nth-child(6) { left: 55%; animation-duration: 13s; }
+    .particles span:nth-child(7) { left: 65%; animation-duration: 11s; }
+    .particles span:nth-child(8) { left: 75%; animation-duration: 15s; }
+    .particles span:nth-child(9) { left: 85%; animation-duration: 8.5s; }
+    .particles span:nth-child(10) { left: 95%; animation-duration: 12.5s; }
+    .particles span:nth-child(11) { left: 10%; animation-duration: 10.5s; }
+    .particles span:nth-child(12) { left: 20%; animation-duration: 13.5s; }
+    .particles span:nth-child(13) { left: 30%; animation-duration: 9.5s; }
+    .particles span:nth-child(14) { left: 40%; animation-duration: 11.5s; }
+    .particles span:nth-child(15) { left: 50%; animation-duration: 14.5s; }
+
+    @keyframes gridMove {
+      0% { transform: rotate(30deg) translate(0, 0); }
+      100% { transform: rotate(30deg) translate(-40px, -40px); }
+    }
+
+    @keyframes floatParticle {
+      0% {
+        transform: translateY(100vh) translateX(-20px) scale(1);
+        opacity: 0;
+      }
+      10% { opacity: 0.6; }
+      90% { opacity: 0.6; }
+      100% {
+        transform: translateY(-20vh) translateX(20px) scale(0.5);
+        opacity: 0;
+      }
+    }
+
+    @keyframes orbFloat {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(40px, -40px) scale(1.2); }
+      66% { transform: translate(-30px, 30px) scale(0.9); }
+    }
+
+    /* ========== NAVBAR with DROPDOWN ========== */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 5%;
+      position: fixed;
+      width: 100%;
+      background: rgba(10, 20, 28, 0.9);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      border-bottom: 1px solid rgba(0, 255, 174, 0.2);
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+
+    .logo a {
+      font-size: clamp(20px, 5vw, 28px);
+      font-weight: 700;
+      color: #00ffae;
+      text-decoration: none;
+      letter-spacing: 1px;
+      text-shadow: 0 0 10px rgba(0, 255, 174, 0.5);
+      white-space: nowrap;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: clamp(15px, 3vw, 32px);
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li {
+      position: relative;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+      transition: 0.3s;
+      position: relative;
+      font-size: clamp(14px, 2vw, 16px);
+      white-space: nowrap;
+    }
+
+    nav ul li a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -6px;
+      left: 0;
+      background-color: #00ffae;
+      transition: 0.3s;
+      box-shadow: 0 0 10px #00ffae;
+    }
+
+    nav ul li a:hover {
+      color: #00ffae;
+    }
+
+    nav ul li a:hover::after {
+      width: 100%;
+    }
+
+    /* Dropdown menu */
+    .home-dropdown {
+      position: relative;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: rgba(15, 30, 40, 0.95);
+      backdrop-filter: blur(12px);
+      border-radius: 12px;
+      padding: 10px 0;
+      min-width: 140px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(0, 255, 174, 0.2);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      z-index: 1001;
+    }
+
+    .home-dropdown:hover .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown-menu a {
+      display: block;
+      padding: 12px 25px;
+      color: #e0f0ff;
+      text-decoration: none;
+      font-size: 14px;
+      transition: 0.3s;
+      white-space: nowrap;
+    }
+
+    .dropdown-menu a:hover {
+      background: rgba(0, 255, 174, 0.15);
+      color: #00ffae;
+      padding-left: 35px;
+    }
+
+    .dropdown-menu a::after {
+      display: none;
+    }
+
+    .menu-btn {
+      display: none;
+      font-size: 28px;
+      cursor: pointer;
+      color: #00ffae;
+      z-index: 1001;
+    }
+
+    /* ========== PAGE HEADER ========== */
+    .page-header {
+      padding: 120px 5% 50px;
+      text-align: center;
+      background: linear-gradient(135deg, rgba(0, 40, 60, 0.8), rgba(20, 10, 40, 0.8));
+      backdrop-filter: blur(4px);
+      margin-top: 0;
+    }
+
+    .page-header h1 {
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #00ffae, #00aaff, #ff66cc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      animation: titleGlow 3s infinite alternate;
+    }
+
+    @keyframes titleGlow {
+      0% { filter: drop-shadow(0 0 10px rgba(0, 255, 174, 0.5)); }
+      100% { filter: drop-shadow(0 0 30px rgba(255, 102, 204, 0.5)); }
+    }
+
+    .page-header p {
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: #e0f0ff;
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.8;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 15px 30px;
+      border-radius: 60px;
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(0, 255, 174, 0.2);
+    }
+
+    /* ========== FILTER SECTION ========== */
+    .filter-section {
+      padding: 40px 5%;
+      background: rgba(20, 30, 40, 0.8);
+      backdrop-filter: blur(8px);
+      border-top: 1px solid rgba(0, 255, 174, 0.2);
+      border-bottom: 1px solid rgba(0, 255, 174, 0.2);
+    }
+
+    .filter-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .filter-btn {
+      padding: 10px 25px;
+      background: transparent;
+      border: 2px solid rgba(0, 255, 174, 0.3);
+      color: white;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 0.95rem;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: #00ffae;
+      border-color: #00ffae;
+      color: #0a1a1f;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(0, 255, 174, 0.3);
+    }
+
+    .search-box {
+      display: flex;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50px;
+      padding: 5px;
+      border: 1px solid rgba(0, 255, 174, 0.3);
+      min-width: 280px;
+    }
+
+    .search-box input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      padding: 10px 20px;
+      color: white;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .search-box input::placeholder {
+      color: #9ac9ff;
+    }
+
+    .search-box button {
+      background: #00ffae;
+      border: none;
+      padding: 10px 25px;
+      border-radius: 50px;
+      color: #0a1a1f;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+      white-space: nowrap;
+    }
+
+    .search-box button:hover {
+      background: #7affd4;
+      transform: scale(1.05);
+    }
+
+    /* ========== MODELS GRID ========== */
+    .models-section {
+      padding: 60px 5%;
+      background: rgba(10, 20, 28, 0.6);
+      backdrop-filter: blur(4px);
+    }
+
+    .models-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .model-card {
+      background: linear-gradient(145deg, rgba(30, 40, 60, 0.8), rgba(15, 25, 40, 0.9));
+      border-radius: 30px;
+      overflow: hidden;
+      border: 1px solid rgba(0, 255, 174, 0.2);
+      backdrop-filter: blur(8px);
+      transition: 0.4s;
+      position: relative;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .model-card::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #00ffae, #00aaff, #ff66cc, #00ffae);
+      border-radius: 32px;
+      z-index: -1;
+      opacity: 0;
+      transition: 0.4s;
+    }
+
+    .model-card:hover {
+      transform: translateY(-15px);
+      border-color: transparent;
+    }
+
+    .model-card:hover::before {
+      opacity: 0.5;
+      animation: borderRotate 3s linear infinite;
+    }
+
+    @keyframes borderRotate {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
+    }
+
+    .model-image {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+    }
+
+    .model-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: 0.6s;
+    }
+
+    .model-card:hover .model-image img {
+      transform: scale(1.1);
+    }
+
+    .model-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      padding: 8px 15px;
+      background: linear-gradient(135deg, #00ffae, #00aaff);
+      color: #0a1a1f;
+      font-weight: 700;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 5px 15px rgba(0, 255, 174, 0.4);
+      z-index: 2;
+    }
+
+    .model-badge.new {
+      background: linear-gradient(135deg, #ff66cc, #ff3366);
+      color: white;
+    }
+
+    .model-badge.sport {
+      background: linear-gradient(135deg, #ffaa00, #ff6600);
+      color: white;
+    }
+
+    .model-content {
+      padding: 25px;
+    }
+
+    .model-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .model-title h3 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .model-price {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #00ffae, #00aaff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .model-price span {
+      font-size: 1rem;
+      font-weight: 400;
+      opacity: 0.7;
+    }
+
+    .model-specs {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .spec-item {
+      text-align: center;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      border: 1px solid rgba(0, 255, 174, 0.1);
+    }
+
+    .spec-item i {
+      font-size: 1.5rem;
+      color: #00ffae;
+      margin-bottom: 5px;
+    }
+
+    .spec-item .spec-value {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .spec-item .spec-label {
+      font-size: 0.8rem;
+      opacity: 0.7;
+    }
+
+    .model-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 20px 0;
+    }
+
+    .feature-tag {
+      padding: 5px 12px;
+      background: rgba(0, 255, 174, 0.1);
+      border: 1px solid rgba(0, 255, 174, 0.2);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      color: #e0f0ff;
+    }
+
+    .model-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .model-btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 0.95rem;
+      text-decoration: none;
+      text-align: center;
+    }
+
+    .model-btn.primary {
+      background: linear-gradient(135deg, #00ffae, #00aaff);
+      color: #0a1a1f;
+    }
+
+    .model-btn.primary:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 20px rgba(0, 255, 174, 0.3);
+    }
+
+    .model-btn.secondary {
+      background: transparent;
+      border: 2px solid #00ffae;
+      color: #00ffae;
+    }
+
+    .model-btn.secondary:hover {
+      background: #00ffae;
+      color: #0a1a1f;
+      transform: scale(1.05);
+    }
+
+    /* ========== COMPARE SECTION ========== */
+    .compare-section {
+      padding: 60px 5%;
+      background: linear-gradient(135deg, rgba(0, 40, 60, 0.8), rgba(40, 20, 60, 0.8));
+      backdrop-filter: blur(4px);
+      border-top: 1px solid rgba(0, 255, 174, 0.2);
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin-bottom: 40px;
+      color: white;
+    }
+
+    .section-title span {
+      background: linear-gradient(135deg, #00ffae, #ff66cc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .compare-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .compare-card {
+      flex: 1 1 250px;
+      background: rgba(20, 30, 50, 0.7);
+      border-radius: 25px;
+      padding: 30px 20px;
+      text-align: center;
+      border: 1px solid rgba(0, 255, 174, 0.2);
+      transition: 0.4s;
+    }
+
+    .compare-card:hover {
+      transform: translateY(-10px);
+      border-color: #00ffae;
+      box-shadow: 0 20px 40px rgba(0, 255, 174, 0.2);
+    }
+
+    .compare-card i {
+      font-size: 3rem;
+      color: #00ffae;
+      margin-bottom: 20px;
+    }
+
+    .compare-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+    }
+
+    .compare-card p {
+      color: #b0d0ff;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .compare-link {
+      color: #00ffae;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .compare-link:hover {
+      gap: 10px;
+    }
+
+    /* ========== FOOTER ========== */
+    footer {
+      background: #0a141f;
+      padding: 60px 5% 30px;
+      border-top: 3px solid rgba(0, 255, 174, 0.3);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      max-width: 1400px;
+      margin: 0 auto 40px;
+    }
+
+    .footer-col h4 {
+      font-size: 1.3rem;
+      margin-bottom: 25px;
+      color: #00ffae;
+      letter-spacing: 1px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-col ul li {
+      margin-bottom: 12px;
+    }
+
+    .footer-col ul li a {
+      color: #b0d0ff;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .footer-col ul li a:hover {
+      color: #00ffae;
+      padding-left: 5px;
+    }
+
+    .footer-col p {
+      color: #b0d0ff;
+      margin-bottom: 10px;
+    }
+
+    .footer-col i {
+      color: #00ffae;
+      margin-right: 10px;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .social-icons a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(0, 255, 174, 0.1);
+      border-radius: 50%;
+      color: #00ffae;
+      transition: 0.3s;
+      text-decoration: none;
+    }
+
+    .social-icons a:hover {
+      background: #00ffae;
+      color: #0a141f;
+      transform: translateY(-3px);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid rgba(0, 255, 174, 0.1);
+      color: #8aadff;
+    }
+
+    /* ========== RESPONSIVE MEDIA QUERIES ========== */
+    @media screen and (max-width: 992px) {
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .models-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .menu-btn {
+        display: block;
+      }
+
+      nav ul {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        flex-direction: column;
+        background: rgba(10, 25, 35, 0.98);
+        backdrop-filter: blur(15px);
+        width: 280px;
+        height: 100vh;
+        padding: 80px 25px 30px;
+        transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        gap: 20px;
+        border-left: 2px solid #00ffae;
+        z-index: 1000;
+        margin: 0;
+        overflow-y: auto;
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+      }
+
+      nav ul.active {
+        right: 0;
+      }
+
+      nav ul li {
+        width: 100%;
+        opacity: 0;
+        transform: translateX(20px);
+        transition: all 0.4s ease;
+        transition-delay: calc(0.1s * var(--i, 0));
+      }
+
+      nav ul.active li {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      nav ul li a {
+        font-size: 1.2rem;
+        display: block;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(0, 255, 174, 0.1);
+      }
+
+      nav ul li a::after {
+        display: none;
+      }
+
+      /* Mobile dropdown */
+      .dropdown-menu {
+        position: static;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        padding: 0 0 0 20px;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        display: none;
+        margin-top: 10px;
+      }
+
+      .home-dropdown.active .dropdown-menu {
+        display: block;
+      }
+
+      .dropdown-menu a {
+        padding: 10px 20px;
+        color: #b0d0ff;
+        border-left: 2px solid #00ffae;
+        margin-bottom: 5px;
+      }
+
+      .filter-container {
+        flex-direction: column;
+      }
+
+      .search-box {
+        width: 100%;
+      }
+
+      .model-title {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .model-actions {
+        flex-direction: column;
+      }
+    }
+
+    @media screen and (max-width: 580px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .footer-col p {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .footer-col i {
+        margin-right: 0;
+        margin-bottom: 5px;
+      }
+
+      .social-icons {
+        justify-content: center;
+      }
+
+      .model-specs {
+        grid-template-columns: 1fr;
+      }
+
+      .filter-group {
+        width: 100%;
+      }
+
+      .filter-btn {
+        flex: 1;
+        text-align: center;
+      }
+    }
+
+    /* Touch device optimizations */
+    @media (hover: none) and (pointer: coarse) {
+      .model-card:hover {
+        transform: none;
+      }
+      
+      .btn:hover,
+      .filter-btn:hover {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ENHANCED EV ANIME BACKGROUND -->
+<div class="anime-bg">
+  <div class="grid"></div>
+  <div class="particles">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <div class="arcs">
+    <svg viewBox="0 0 1000 600" preserveAspectRatio="none">
+      <path d="M0,300 Q250,100 500,300 T1000,300" stroke="#00ffae" stroke-width="2" fill="none" stroke-dasharray="15 15" opacity="0.2"/>
+      <path d="M0,400 Q300,600 600,400 T1200,400" stroke="#ff66cc" stroke-width="2" fill="none" stroke-dasharray="20 20" opacity="0.15"/>
+      <path d="M-200,200 Q150,50 500,200 T1200,200" stroke="#00aaff" stroke-width="2" fill="none" stroke-dasharray="10 10" opacity="0.15"/>
+    </svg>
+  </div>
+  <div class="orbs">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>
+
+<!-- HEADER with dropdown -->
+<header>
+  <div class="logo"><a href="models.html"> Stackly EV</a></div>
+  <nav>
+    <ul id="menu">
+      <li class="home-dropdown" style="--i:1">
+        <a href="index.html">Home</a>
+        <div class="dropdown-menu">
+          <a href="index.html">Home 1</a>
+          <a href="index2.html">Home 2</a>
+        </div>
+      </li>
+      <li style="--i:2"><a href="models.html" class="active">Models</a></li>
+      <li style="--i:3"><a href="Technology.html">Technology</a></li>
+      <li style="--i:4"><a href="404.html">About</a></li>
+      <li style="--i:5"><a href="404.html">Contact</a></li>
+    </ul>
+    <div class="menu-btn" onclick="toggleMenu()">☰</div>
+  </nav>
+</header>
+
+<!-- PAGE HEADER -->
+<section class="page-header">
+  <h1 data-aos="fade-down">ELECTRIC MODELS</h1>
+  <p data-aos="fade-up" data-aos-delay="100">Discover our full range of electric vehicles. Zero emissions, infinite performance.</p>
+</section>
+
+<!-- FILTER SECTION -->
+<section class="filter-section" data-aos="fade-up">
+  <div class="filter-container">
+    <div class="filter-group">
+      <button class="filter-btn active">All Models</button>
+      <button class="filter-btn">Sedan</button>
+      <button class="filter-btn">SUV</button>
+      <button class="filter-btn">Sports</button>
+      <button class="filter-btn">Luxury</button>
+    </div>
+    <div class="search-box">
+      <input type="text" placeholder="Search models...">
+      <button><i class="fas fa-search"></i> Search</button>
+    </div>
+  </div>
+</section>
+
+<!-- MODELS GRID -->
+<section class="models-section">
+  <div class="models-grid">
+    <!-- Model 1 - Sport EV -->
+    <div class="model-card" data-aos="flip-left" data-aos-delay="100">
+      <div class="model-image">
+        <img src="https://images.unsplash.com/photo-1619767886558-efdc259cde1a?w=600&auto=format" alt="Sport EV">
+        <span class="model-badge sport">SPORT</span>
+      </div>
+      <div class="model-content">
+        <div class="model-title">
+          <h3>Volt Racer</h3>
+          <div class="model-price">$89k<span>/msrp</span></div>
+        </div>
+        <div class="model-specs">
+          <div class="spec-item">
+            <i class="fas fa-bolt"></i>
+            <div class="spec-value">3.2s</div>
+            <div class="spec-label">0-100 km/h</div>
+          </div>
+          <div class="spec-item">
+            <i class="fas fa-battery-full"></i>
+            <div class="spec-value">520km</div>
+            <div class="spec-label">Range</div>
+          </div>
+          <div class="spec-item">
+            <i class="fas fa-charging-station"></i>
+            <div class="spec-value">350kW</div>
+            <div class="spec-label">Fast Charge</div>
+          </div>
+          <div class="spec-item">
+            <i class="fas fa-horse-head"></i>
+            <div class="spec-value">670hp</div>
+            <div class="spec-label">Power</div>
+          </div>
+        </div>
+        <div class="model-features">
+          <span class="feature-tag"><i class="fas fa-check"></i> AWD</span>
+          <span class="feature-tag"><i class="fas fa-check"></i> Autopilot</span>
+          <span class="feature-tag"><i class="fas fa-check"></i> Carbon Roof</span>
+        </div>
+        <div class="model-actions">
+          <a href="404.html" class="model-btn primary"><i class="fas fa-eye"></i> View Details</a>
+          <a href="404.html" class="model-btn secondary"><i class="fas fa-car"></i> Test Drive</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Model 2 - Luxury SUV -->
+    <div class="model-card" data-aos="flip-left" data-aos-delay="200">
+      <div class="model-image">
+        <img src="sporty ev.webp" alt="Luxury SUV">
+        <span class="model-badge new">NEW</span>
+      </div>
+      <div class="model-content">
+        <div class="model-title">
+          <h3>Stackly Voyager</h3>
+          <div class="model-price">$120k<span>/msrp</span></div>
+        </div>
+        <div class="model-specs">
+          <div class="spec-item">
+            <i class="fas fa-bolt"></i>
+            <div class="spec-value">4.5s</div>
+            <div class="spec-label">0-100 km/h</div>
+          </div>
+          <div class="spec-item">
+            <i class="fas fa-battery-full"></i>
+            <div class="spec-value">650km</div>
+            <div class="spec-label">Range</div>
+          </div>
+          <div class="spec-item">
+            <i class="fas fa-charging-station"></i>
+            <div class="spec-value">300kW</div>
+            <div class="spec-label">Fast Charge</div>
+          </div>
+          <div class="spec-item">
+            <i class="fas fa-users"></i>
+            <div class="spec-value">7 Seats</div>
+            <div class="spec-label">Capacity</div>
+          </div>
+        </div>
+        <div class="model-features">
+          <span class="feature-tag"><i class="fas fa-check"></i> Air Suspension</span>
+          <span class="feature-tag"><i class="fas fa-check"></i> Panoramic Roof</span>
+          <span class="feature-tag"><i class="fas fa-check"></i> Premium Audio</span>
+        </div>
+        <div class="model-actions">
+          <a href="404.html" class="model-btn primary"><i class="fas fa-eye"></i> View Details</a>
+          <a href="404.html" class="model-btn secondary"><i class="fas fa-car"></i> Test Drive</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Model 3 - Executive Sedan -->
+    <div class="model-card" data-aos="flip-left" data-aos-delay="300">
+      <div class="model-image">
+        <img src="https://images.unsplash.com/photo-1620891549027-942fdc95d3f5?w=600&auto=format" alt="Executive Sedan">
+        <span class="model-badge">LUXURY</span>
+      </div>
+      <div class="model-content">
+        <div class="model-title">
+          <h3>Volt Executive</h3>
+          <div class="model-price">$75k<span>/msrp</span></div>
+        </div>
+        <div class="model-specs">
+          <div class="spec-item">
+            <i class="fas fa-bolt"></i>
+            <div class="spec-value">3.9s</div>
+            <div class="spec-label">0-100 km/h</div>
+          </div>
+          <div class="spec-item">
+            <i class="fas fa-battery-full"></i>
+            <div class="spec-value">580km</div>
+            <div class="spec-label">Range</div>
+          </div>
+          <div class="spec-item">
+            <i class="fas fa-charging-station"></i>
+            <div class="spec-value">250kW</div>
+            <div class="spec-label">Fast Charge</div>
+          </div>
+          <div class="spec-item">
+            <i class="fas fa-crown"></i>
+            <div class="spec-value">Executive</div>
+            <div class="spec-label">Class</div>
+          </div>
+        </div>
+        <div class="model-features">
+          <span class="feature-tag"><i class="fas fa-check"></i> Leather Seats</span>
+          <span class="feature-tag"><i class="fas fa-check"></i> Ambient Light</span>
+          <span class="feature-tag"><i class="fas fa-check"></i> Massage Seats</span>
+        </div>
+        <div class="model-actions">
+          <a href="404.html" class="model-btn primary"><i class="fas fa-eye"></i> View Details</a>
+          <a href="404.html" class="model-btn secondary"><i class="fas fa-car"></i> Test Drive</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Model 4 - Compact EV -->
+    <div class="model-card" data-aos="flip-left" data-aos-delay="400">
+      <div class="model-image">
+        <img src="EV concept.webp" alt="Compact EV">
+        <span class="model-badge">CITY</span>
+      </div>
+      <div class="model-content">
+        <div class="model-title">
+          <h3>Stackly Urban</h3>
+          <div class="model-price">$45k<span>/msrp</span></div>
+        </div>
+        <div class="model-specs">
+          <div class="spec-item">
+            <i class="fas fa-bolt"></i>
+            <div class="spec-value">6.2s</div>
+            <div class="spec-label">0-100 km/h</div>
+          </div>
+          <div class="spec-item">
+            <i class="fas fa-battery-full"></i>
+            <div class="spec-value">420km</div>
+            <div class="spec-label">Range</div>
+          </div>
+          <div class="spec-item">
+            <i class="fas fa-charging-station"></i>
+            <div class="spec-value">150kW</div>
+            <div class="spec-label">Fast Charge</div>
+          </div>
+          <div class="spec-item">
+            <i class="fas fa-city"></i>
+            <div class="spec-value">Compact</div>
+            <div class="spec-label">Size</div>
+          </div>
+        </div>
+        <div class="model-features">
+          <span class="feature-tag"><i class="fas fa-check"></i> City Assist</span>
+          <span class="feature-tag"><i class="fas fa-check"></i> 360° Camera</span>
+          <span class="feature-tag"><i class="fas fa-check"></i> Auto Park</span>
+        </div>
+        <div class="model-actions">
+          <a href="404.html" class="model-btn primary"><i class="fas fa-eye"></i> View Details</a>
+          <a href="404.html" class="model-btn secondary"><i class="fas fa-car"></i> Test Drive</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Model 5 - Performance EV -->
+    <div class="model-card" data-aos="flip-left" data-aos-delay="500">
+      <div class="model-image">
+        <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=600&auto=format" alt="Performance EV">
+        <span class="model-badge sport">PERFORMANCE</span>
+      </div>
+      <div class="model-content">
+        <div class="model-title">
+          <h3>Volt Turbo GT</h3>
+          <div class="model-price">$145k<span>/msrp</span></div>
+        </div>
+        <div class="model-specs">
+          <div class="spec-item">
+            <i class="fas fa-bolt"></i>
+            <div class="spec-value">2.1s</div>
+            <div class="spec-label">0-100 km/h</div>
+          </div>
+          <div class="spec-item">
+            <i class="fas fa-battery-full"></i>
+            <div class="spec-value">480km</div>
+            <div class="spec-label">Range</div>
+          </div>
+          <div class="spec-item">
+            <i class="fas fa-charging-station"></i>
+            <div class="spec-value">400kW</div>
+            <div class="spec-label">Fast Charge</div>
+          </div>
+          <div class="spec-item">
+            <i class="fas fa-tachometer-alt"></i>
+            <div class="spec-value">1000hp</div>
+            <div class="spec-label">Power</div>
+          </div>
+        </div>
+        <div class="model-features">
+          <span class="feature-tag"><i class="fas fa-check"></i> Track Mode</span>
+          <span class="feature-tag"><i class="fas fa-check"></i> Carbon Ceramic</span>
+          <span class="feature-tag"><i class="fas fa-check"></i> Launch Control</span>
+        </div>
+        <div class="model-actions">
+          <a href="404.html" class="model-btn primary"><i class="fas fa-eye"></i> View Details</a>
+          <a href="404.html" class="model-btn secondary"><i class="fas fa-car"></i> Test Drive</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Model 6 - Family SUV -->
+    <div class="model-card" data-aos="flip-left" data-aos-delay="600">
+      <div class="model-image">
+        <img src="family.webp" alt="Family SUV">
+        <span class="model-badge new">FAMILY</span>
+      </div>
+      <div class="model-content">
+        <div class="model-title">
+          <h3>Stackly Venture</h3>
+          <div class="model-price">$82k<span>/msrp</span></div>
+        </div>
+        <div class="model-specs">
+          <div class="spec-item">
+            <i class="fas fa-bolt"></i>
+            <div class="spec-value">5.1s</div>
+            <div class="spec-label">0-100 km/h</div>
+          </div>
+          <div class="spec-item">
+            <i class="fas fa-battery-full"></i>
+            <div class="spec-value">620km</div>
+            <div class="spec-label">Range</div>
+          </div>
+          <div class="spec-item">
+            <i class="fas fa-charging-station"></i>
+            <div class="spec-value">280kW</div>
+            <div class="spec-label">Fast Charge</div>
+          </div>
+          <div class="spec-item">
+            <i class="fas fa-users"></i>
+            <div class="spec-value">7 Seats</div>
+            <div class="spec-label">Family</div>
+          </div>
+        </div>
+        <div class="model-features">
+          <span class="feature-tag"><i class="fas fa-check"></i> Family Pack</span>
+          <span class="feature-tag"><i class="fas fa-check"></i> Entertainment</span>
+          <span class="feature-tag"><i class="fas fa-check"></i> Roof Rails</span>
+        </div>
+        <div class="model-actions">
+          <a href="404.html" class="model-btn primary"><i class="fas fa-eye"></i> View Details</a>
+          <a href="404.html" class="model-btn secondary"><i class="fas fa-car"></i> Test Drive</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE SECTION -->
+<section class="compare-section">
+  <h2 class="section-title" data-aos="fade-up"><span>Compare</span> Models</h2>
+  <div class="compare-container">
+    <div class="compare-card" data-aos="fade-up" data-aos-delay="100">
+      <i class="fas fa-balance-scale"></i>
+      <h3>Side by Side</h3>
+      <p>Compare up to 3 models and find your perfect match</p>
+      <a href="404.html" class="compare-link">Compare Now <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="compare-card" data-aos="fade-up" data-aos-delay="200">
+      <i class="fas fa-calculator"></i>
+      <h3>Cost Calculator</h3>
+      <p>Calculate total cost of ownership vs petrol cars</p>
+      <a href="404.html" class="compare-link">Calculate <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="compare-card" data-aos="fade-up" data-aos-delay="300">
+      <i class="fas fa-calendar-alt"></i>
+      <h3>Schedule Test Drive</h3>
+      <p>Experience the future. Book your test drive today</p>
+      <a href="404.html" class="compare-link">Book Now <i class="fas fa-arrow-right"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Stackly EV</h4>
+      <p><i class="fas fa-map-marker-alt"></i> Salem, Tamil Nadu</p>
+      <p><i class="fas fa-phone-alt"></i> +91 80565 12345</p>
+      <p><i class="fas fa-envelope"></i> hello@stackly.io</p>
+      <div class="social-icons">
+        <a href="404.html" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="404.html" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="404.html" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="404.html" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Models</h4>
+      <ul>
+        <li><a href="404.html">Volt Racer</a></li>
+        <li><a href="404.html">Stackly Voyager</a></li>
+        <li><a href="404.html">Volt Executive</a></li>
+        <li><a href="404.html">Stackly Urban</a></li>
+        <li><a href="404.html">Volt Turbo GT</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <ul>
+        <li><a href="404.html">FAQ</a></li>
+        <li><a href="404.html">Software Updates</a></li>
+        <li><a href="404.html">Charging Network</a></li>
+        <li><a href="404.html">Warranty</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="404.html">Privacy Policy</a></li>
+        <li><a href="404.html">Terms of Service</a></li>
+        <li><a href="404.html">Careers</a></li>
+        <li><a href="404.html">Press</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <i class="fas fa-bolt"></i> 2025 Stackly EV · All rights reserved · Made with <i class="fas fa-heart" style="color: #ff6b6b;"></i> in Salem · <i class="fas fa-leaf"></i> zero‑emission
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  // Initialize AOS
+  AOS.init({
+    duration: 800,
+    once: true,
+    offset: 100
+  });
+
+  // Mobile menu toggle
+  function toggleMenu() {
+    const menu = document.getElementById('menu');
+    menu.classList.toggle('active');
+    document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : 'auto';
+  }
+
+  // Close menu when clicking on a link
+  document.querySelectorAll('#menu a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      if (window.innerWidth <= 768) {
+        document.getElementById('menu').classList.remove('active');
+        document.body.style.overflow = 'auto';
+      }
+    });
+  });
+
+  // Handle mobile dropdown toggle
+  document.querySelector('.home-dropdown > a')?.addEventListener('click', (e) => {
+    if (window.innerWidth <= 768) {
+      e.preventDefault();
+      document.querySelector('.home-dropdown').classList.toggle('active');
+    }
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    const menu = document.getElementById('menu');
+    const menuBtn = document.querySelector('.menu-btn');
+    
+    if (window.innerWidth <= 768) {
+      if (!menu.contains(e.target) && !menuBtn.contains(e.target) && menu.classList.contains('active')) {
+        menu.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      }
+    }
+  });
+
+  // Handle window resize
+  window.addEventListener('resize', () => {
+    const menu = document.getElementById('menu');
+    if (window.innerWidth > 768) {
+      menu.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+  });
+
+  // Filter buttons functionality
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      // Here you would add filtering logic
+      alert('Filter: ' + this.textContent + ' (Demo feature)');
+    });
+  });
+
+  // Search functionality
+  document.querySelector('.search-box button')?.addEventListener('click', function() {
+    const searchTerm = document.querySelector('.search-box input').value;
+    if (searchTerm) {
+      alert('Searching for: ' + searchTerm + ' (Demo feature)');
+    } else {
+      alert('Please enter a search term');
+    }
+  });
+
+  document.querySelector('.search-box input')?.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      if (this.value) {
+        alert('Searching for: ' + this.value + ' (Demo feature)');
+      } else {
+        alert('Please enter a search term');
+      }
+    }
+  });
+</script>
+</body>
+</html>
